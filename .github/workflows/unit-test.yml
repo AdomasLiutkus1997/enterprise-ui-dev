@@ -12,8 +12,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        name: Checkout Repository
       - name: Setup Node
         uses: actions/setup-node@v3
+      - uses: actions/cache@v3
+        id: npm-cache
+        with: 
+          path: ~/.npm
+          key: npm-${{ hasFiles('**/package-lock.json') }}
       - run: npm ci
       - run: npm test
   build:
@@ -21,7 +27,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        name: Checkout Repository
       - name: Setup Node
         uses: actions/setup-node@v3
+      - uses: actions/cache@v3
+        id: npm-cache
+        with: 
+          path: ~/.npm
+          key: npm-${{ hasFiles('**/package-lock.json') }}
       - run: npm ci
       - run: npm run build
